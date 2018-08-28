@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  pg-backup:
+    build: .
+    image: williamjackson/pg-backup
