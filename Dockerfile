@@ -11,4 +11,5 @@ COPY pg_backup.py /pg_backup.py
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 LABEL maintainer=william@subtlecoolness.com \
-      org.label-schema.schema-version=1.0
+      org.label-schema.schema-version=1.0 \
+      org.label-schema.version=0.0.1
