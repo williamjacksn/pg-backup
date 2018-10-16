@@ -14,4 +14,4 @@ ENV USER_SPEC 1000:1000
 
 LABEL maintainer=william@subtlecoolness.com \
       org.label-schema.schema-version=1.0 \
-      org.label-schema.version=0.0.1
+      org.label-schema.version=0.0.2
