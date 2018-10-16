@@ -7,8 +7,6 @@ import sys
 
 from typing import List
 
-version = '0.0.1'
-
 
 class Config:
     _destination: str
@@ -26,17 +24,31 @@ class Config:
 
     @property
     def databases(self) -> List[str]:
+        if self._databases is None:
+            return []
         return [d.strip() for d in self._databases.split(',')]
 
     @property
     def destination(self) -> pathlib.Path:
         return pathlib.Path(self._destination).resolve()
 
+    @property
+    def version(self) -> str:
+        """Read version from Dockerfile"""
+        dockerfile = pathlib.Path(__file__).resolve().parent / 'Dockerfile'
+        with open(dockerfile) as f:
+            for line in f:
+                if 'org.label-schema.version' in line:
+                    return line.strip().split('=', maxsplit=1)[1]
+        return 'unknown'
+
 
 def main():
     config = Config()
-    logging.basicConfig(format=config.log_format, level=config.log_level, stream=sys.stdout)
-    logging.info(f'pg-backup {version}')
+    logging.basicConfig(format=config.log_format, level='DEBUG', stream=sys.stdout)
+    logging.debug(f'pg-backup {config.version}')
+    logging.debug(f'Changing log level to {config.log_level}')
+    logging.getLogger().setLevel(config.log_level)
     for db in config.databases:
         backup_file = config.destination / f'{datetime.date.today()}-{db}.sql'
         logging.info(f'Backing up {db} to {backup_file}')
