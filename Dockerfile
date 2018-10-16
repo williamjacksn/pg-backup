@@ -6,6 +6,7 @@ RUN /sbin/apk add --no-cache postgresql-client su-exec \
  && /usr/local/bin/pip install --no-cache-dir --requirement /pg-backup/requirements-docker.txt
 
 COPY . /pg-backup
+RUN chmod +x /pg-backup/docker-entrypoint.sh
 
 ENTRYPOINT ["/pg-backup/docker-entrypoint.sh"]
 
