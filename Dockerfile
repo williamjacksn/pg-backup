@@ -1,9 +1,6 @@
-FROM python:3.7.1-alpine3.8
+FROM python:3.7.2-alpine3.9
 
-COPY requirements.txt /pg-backup/requirements.txt
-
-RUN /sbin/apk add --no-cache postgresql-client su-exec \
- && /usr/local/bin/pip install --no-cache-dir --requirement /pg-backup/requirements.txt
+RUN /sbin/apk add --no-cache postgresql-client su-exec
 
 COPY . /pg-backup
 RUN chmod +x /pg-backup/docker-entrypoint.sh
