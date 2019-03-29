@@ -10,8 +10,8 @@ Set the following environment variables:
 *   `DESTINATION`: path to a folder to save the database backup files in
 *   `DSN`: connection string for the database server *without* a database specified 
 *   `LOG_FORMAT`: optional, the format for all output (default: `%(levelname)s [%(name)s] %(message)s`)
-*   `LOG_LEVEL`: options, the log level for all output (default: `DEBUG`)
-*   `USER_SPEC`: the user/group to run as (default: `1000:1000`)
+*   `LOG_LEVEL`: optional, the log level for all output (default: `DEBUG`)
+*   `USER_SPEC`: optional, the user/group to run as when using Docker (default: `1000:1000`)
 
 Then run the tool:
 
