@@ -39,5 +39,6 @@ docker container run \
   -e DATABASES=app_db,postgres,william \
   -e DESTINATION=/db-backups \
   -e DSN=postgresql://username:password@db_host \
-  -v /home/william/db-backups:/db-backups
+  -v /home/william/db-backups:/db-backups \
+  williamjackson/pg-backup
 ```
