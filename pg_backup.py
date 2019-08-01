@@ -38,7 +38,7 @@ class Config:
         dockerfile = pathlib.Path(__file__).resolve().parent / 'Dockerfile'
         with open(dockerfile) as f:
             for line in f:
-                if 'org.label-schema.version' in line:
+                if 'org.opencontainers.image.version' in line:
                     return line.strip().split('=', maxsplit=1)[1]
         return 'unknown'
 
