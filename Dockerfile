@@ -10,6 +10,6 @@ ENTRYPOINT ["/pg-backup/docker-entrypoint.sh"]
 ENV PYTHONUNBUFFERED="1" \
     USER_SPEC="1000:1000"
 
-LABEL maintainer=william@subtlecoolness.com \
-      org.label-schema.schema-version=1.0 \
-      org.label-schema.version=1.0.0
+LABEL org.opencontainers.image.authors="William Jackson <william@subtlecoolness.com>" \
+      org.opencontainers.image.source="https://github.com/williamjacksn/pg-backup" \
+      org.opencontainers.image.version=1.0.0
