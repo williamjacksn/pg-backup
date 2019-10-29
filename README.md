@@ -23,6 +23,7 @@ version: '3.7'
 services:
   pg-backup:
     image: williamjackson/pg-backup
+    user: 1000:1000
     environment:
       DATABASES: app_db,postgres,william
       DESTINATION: /db-backups
@@ -33,8 +34,9 @@ services:
 
 ## Example `docker` command
 
-```bash
+```sh
 docker container run \
+  -u 1000:1000
   -e DATABASES=app_db,postgres,william \
   -e DESTINATION=/db-backups \
   -e DSN=postgresql://username:password@db_host \
