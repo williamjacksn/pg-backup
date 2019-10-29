@@ -19,7 +19,7 @@ Then run the tool:
 ## Example `docker-compose.yml`
 
 ```yaml
-version: '3'
+version: '3.7'
 services:
   pg-backup:
     image: williamjackson/pg-backup
