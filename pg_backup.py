@@ -9,7 +9,7 @@ from typing import List
 
 
 class Settings:
-    _databases: str
+    databases: List[str]
     destination: pathlib.Path
     dsn: str
     log_format: str
@@ -17,18 +17,12 @@ class Settings:
     version: str
 
     def __init__(self):
-        self._databases = os.getenv('DATABASES')
+        self.databases = os.getenv('DATABASES', '').split()
         self.destination = pathlib.Path(os.getenv('DESTINATION')).resolve()
         self.dsn = os.getenv('DSN')
         self.log_format = os.getenv('LOG_FORMAT', '%(levelname)s [%(name)s] %(message)s')
         self.log_level = os.getenv('LOG_LEVEL', 'INFO')
         self.version = os.getenv('APP_VERSION', 'unknown')
-
-    @property
-    def databases(self) -> List[str]:
-        if self._databases is None:
-            return []
-        return [d.strip() for d in self._databases.split(',')]
 
 
 def main():
