@@ -7,9 +7,10 @@ RUN chmod +x /pg-backup/docker-entrypoint.sh
 
 ENTRYPOINT ["/pg-backup/docker-entrypoint.sh"]
 
-ENV PYTHONUNBUFFERED="1" \
+ENV APP_VERSION="1.0.1" \
+    PYTHONUNBUFFERED="1" \
     USER_SPEC="1000:1000"
 
 LABEL org.opencontainers.image.authors="William Jackson <william@subtlecoolness.com>" \
       org.opencontainers.image.source="https://github.com/williamjacksn/pg-backup" \
-      org.opencontainers.image.version=1.0.1
+      org.opencontainers.image.version="${APP_VERSION}"

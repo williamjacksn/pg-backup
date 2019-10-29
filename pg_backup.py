@@ -9,38 +9,26 @@ from typing import List
 
 
 class Config:
-    _destination: str
     _databases: str
+    destination: pathlib.Path
     dsn: str
     log_format: str
     log_level: str
+    version: str
 
     def __init__(self):
-        self._destination = os.getenv('DESTINATION')
         self._databases = os.getenv('DATABASES')
+        self.destination = pathlib.Path(os.getenv('DESTINATION')).resolve()
         self.dsn = os.getenv('DSN')
         self.log_format = os.getenv('LOG_FORMAT', '%(levelname)s [%(name)s] %(message)s')
         self.log_level = os.getenv('LOG_LEVEL', 'DEBUG')
+        self.version = os.getenv('APP_VERSION', 'unknown')
 
     @property
     def databases(self) -> List[str]:
         if self._databases is None:
             return []
         return [d.strip() for d in self._databases.split(',')]
-
-    @property
-    def destination(self) -> pathlib.Path:
-        return pathlib.Path(self._destination).resolve()
-
-    @property
-    def version(self) -> str:
-        """Read version from Dockerfile"""
-        dockerfile = pathlib.Path(__file__).resolve().parent / 'Dockerfile'
-        with open(dockerfile) as f:
-            for line in f:
-                if 'org.opencontainers.image.version' in line:
-                    return line.strip().split('=', maxsplit=1)[1]
-        return 'unknown'
 
 
 def main():
