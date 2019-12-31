@@ -1,6 +1,6 @@
 FROM python:3.8.1-alpine3.10
 
-RUN /sbin/apk add --no-cache postgresql-client su-exec
+RUN /sbin/apk add --no-cache postgresql-client
 
 COPY pg_backup.py /pg-backup/pg_backup.py
 
