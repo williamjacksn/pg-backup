@@ -1,36 +1,44 @@
-name: Build the release container image
+name: Build the container image
 
 on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
   release:
-    types: [published]
+    types:
+      - published
 
 jobs:
 
   build:
-    name: Build the release container image
+    name: Build the container image
     runs-on: ubuntu-latest
     steps:
     - name: Check out the repository
-      uses: actions/checkout@v1
-    - name: Get the release tag
-      id: get-release-tag
-      run: echo ::set-output name=release-tag::${GITHUB_REF/refs\/tags\//}
-    - name: Log in to the GitHub registry
-      run: docker login --password "${{ secrets.GITHUB_TOKEN }}" --username "${GITHUB_ACTOR}" docker.pkg.github.com
-    - name: Log in to Docker Hub
-      run: docker login --password "${{ secrets.DOCKER_HUB_PASSWORD}}" --username "${{ secrets.DOCKER_HUB_USERNAME }}"
-    - name: Set the image name and tag
-      id: set-image-name
-      run: echo ::set-output name=image-name::pg-backup:${{ steps.get-release-tag.outputs.release-tag }}
-    - name: Set the full GitHub image name
-      id: set-github-image-name
-      run: echo ::set-output name=image-name::docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ steps.set-image-name.outputs.image-name }}
-    - name: Set the full Docker Hub image name
-      id: set-docker-hub-image-name
-      run: echo ::set-output name=image-name::williamjackson/${{ steps.set-image-name.outputs.image-name }}
+      uses: actions/checkout@v2.3.2
     - name: Build the container image
-      run: docker build --file Dockerfile --tag ${{ steps.set-github-image-name.outputs.image-name }} --tag ${{ steps.set-docker-hub-image-name.outputs.image-name }}  .
-    - name: Push the image to the GitHub registry
-      run: docker image push ${{ steps.set-github-image-name.outputs.image-name }}
-    - name: Push the image to Docker Hub
-      run: docker image push ${{ steps.set-docker-hub-image-name.outputs.image-name }}
+      uses: docker/build-push-action@v1.1.0
+      with:
+        repository: pg-backup
+    - name: Tag and push the image (GitHub)
+      if: github.event_name == 'push' || github.event_name == 'release'
+      uses: docker/build-push-action@v1.1.0
+      with:
+        repository: ${{ github.repository }}/pg-backup
+        registry: docker.pkg.github.com
+        username: ${{ github.actor }}
+        password: ${{ github.token }}
+        tag_with_ref: true
+        add_git_labels: true
+    - name: Tag and push the image (Docker Hub)
+      if: github.event_name == 'push' || github.event_name == 'release'
+      uses: docker/build-push-action@v1.1.0
+      with:
+        repository: williamjackson/pg-backup
+        username: ${{ secrets.docker_hub_username }}
+        password: ${{ secrets.docker_hub_password }}
+        tag_with_ref: true
+        add_git_labels: true
