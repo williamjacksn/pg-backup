@@ -17,28 +17,32 @@ jobs:
     name: Build the container image
     runs-on: ubuntu-latest
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v2.3.3
-    - name: Build the container image
-      uses: docker/build-push-action@v1.1.0
-      with:
-        repository: pg-backup
-    - name: Tag and push the image (GitHub)
-      if: github.event_name == 'push' || github.event_name == 'release'
-      uses: docker/build-push-action@v1.1.0
-      with:
-        repository: ${{ github.repository }}/pg-backup
-        registry: docker.pkg.github.com
-        username: ${{ github.actor }}
-        password: ${{ github.token }}
-        tag_with_ref: true
-        add_git_labels: true
-    - name: Tag and push the image (Docker Hub)
-      if: github.event_name == 'push' || github.event_name == 'release'
-      uses: docker/build-push-action@v1.1.0
-      with:
-        repository: williamjackson/pg-backup
-        username: ${{ secrets.docker_hub_username }}
-        password: ${{ secrets.docker_hub_password }}
-        tag_with_ref: true
-        add_git_labels: true
+
+      - name: Check out the repository
+        uses: actions/checkout@v2.3.3
+
+      - name: Build the container image
+        uses: docker/build-push-action@v1.1.1
+        with:
+          repository: pg-backup
+
+      - name: Tag and push the image (GitHub)
+        if: github.event_name == 'push' || github.event_name == 'release'
+        uses: docker/build-push-action@v1.1.1
+        with:
+          repository: ${{ github.repository }}/pg-backup
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          tag_with_ref: true
+          add_git_labels: true
+
+      - name: Tag and push the image (Docker Hub)
+        if: github.event_name == 'push' || github.event_name == 'release'
+        uses: docker/build-push-action@v1.1.1
+        with:
+          repository: williamjackson/pg-backup
+          username: ${{ secrets.docker_hub_username }}
+          password: ${{ secrets.docker_hub_password }}
+          tag_with_ref: true
+          add_git_labels: true
