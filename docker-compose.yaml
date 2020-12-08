@@ -1,6 +1,5 @@
-version: '3.7'
+version: '3.8'
 
 services:
   pg-backup:
-    build: .
-    image: docker.pkg.github.com/williamjacksn/pg-backup/pg-backup
+    image: ghcr.io/williamjacksn/pg-backup
