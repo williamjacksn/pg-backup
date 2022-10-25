@@ -16,10 +16,9 @@ Then run the tool:
 
     python pg_backup.py
 
-## Example `docker-compose.yaml`
+## Example `compose.yaml`
 
 ```yaml
-version: '3.8'
 services:
   pg-backup:
     image: williamjackson/pg-backup
