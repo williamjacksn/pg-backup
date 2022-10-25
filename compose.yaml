@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   pg-backup:
     image: ghcr.io/williamjacksn/pg-backup
