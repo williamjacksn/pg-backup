@@ -1,2 +1,2 @@
-docker-compose.override.yaml
 .idea
+compose.override.yaml
