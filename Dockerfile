@@ -1,4 +1,4 @@
-FROM python:3.11.3-alpine3.17
+FROM python:3.11.3-alpine3.18
 
 RUN /sbin/apk add --no-cache postgresql15-client
 
