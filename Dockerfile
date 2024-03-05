@@ -7,7 +7,7 @@ COPY pg_backup.py /pg-backup/pg_backup.py
 ENTRYPOINT ["/usr/local/bin/python"]
 CMD ["/pg-backup/pg_backup.py"]
 
-ENV APP_VERSION="2022.1" \
+ENV APP_VERSION="2024.1" \
     PYTHONDONTWRITEBYTECODE="1" \
     PYTHONUNBUFFERED="1" \
     TZ="Etc/UTC"
