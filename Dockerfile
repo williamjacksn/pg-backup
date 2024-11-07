@@ -1,17 +1,31 @@
-FROM python:3.13-alpine
+# The following line is for Dependabot.
+# When a new version of PostgreSQL is available,
+# update the client version in the apt-get command below
+FROM postgres:17
 
-RUN /sbin/apk add --no-cache postgresql16-client
+FROM python:3.13-slim
 
-COPY pg_backup.py /pg-backup/pg_backup.py
+ARG DEBIAN_FRONTEND=noninteractive
+RUN /usr/bin/apt-get update \
+ && /usr/bin/apt-get install --assume-yes postgresql-common \
+ && /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y \
+ && /usr/bin/apt-get install --assume-yes postgresql-client-17 \
+ && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["/usr/local/bin/python"]
-CMD ["/pg-backup/pg_backup.py"]
+RUN /usr/sbin/useradd --create-home --shell /bin/bash --user-group python
 
-ENV APP_VERSION="2024.2" \
+USER python
+RUN /usr/local/bin/python -m venv /home/python/venv
+
+COPY --chown=python:python pg_backup.py /home/python/pg-backup/pg_backup.py
+
+ENTRYPOINT ["/home/python/venv/bin/python"]
+CMD ["/home/python/pg-backup/pg_backup.py"]
+
+ENV PATH="/home/python/venv/bin/python:${PATH}" \
     PYTHONDONTWRITEBYTECODE="1" \
     PYTHONUNBUFFERED="1" \
     TZ="Etc/UTC"
 
 LABEL org.opencontainers.image.authors="William Jackson <william@subtlecoolness.com>" \
-      org.opencontainers.image.source="https://github.com/williamjacksn/pg-backup" \
-      org.opencontainers.image.version="${APP_VERSION}"
+      org.opencontainers.image.source="https://github.com/williamjacksn/pg-backup"
