@@ -22,7 +22,7 @@ class Settings:
         self.dsn = os.getenv('DSN')
         self.log_format = os.getenv('LOG_FORMAT', '%(levelname)s [%(name)s] %(message)s')
         self.log_level = os.getenv('LOG_LEVEL', 'INFO')
-        self.version = '2024.2'
+        self.version = '2024.3'
 
 
 def main():
