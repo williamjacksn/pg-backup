@@ -5,11 +5,9 @@ import pathlib
 import subprocess
 import sys
 
-from typing import List
-
 
 class Settings:
-    databases: List[str]
+    databases: list[str]
     destination: pathlib.Path
     dsn: str
     log_format: str
