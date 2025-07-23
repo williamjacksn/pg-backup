@@ -3,7 +3,7 @@
 # update the client version in the apt-get command below
 FROM postgres:17
 
-FROM python:3.13-slim
+FROM python:3.13.5-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN /usr/bin/apt-get update \
