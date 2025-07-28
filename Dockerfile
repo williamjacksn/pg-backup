@@ -21,8 +21,7 @@ RUN /usr/local/bin/uv sync --frozen
 
 COPY --chown=python:python pg_backup.py ./
 
-ENTRYPOINT ["/app/.venv/bin/python"]
-CMD ["/app/pg_backup.py"]
+ENTRYPOINT ["uv", "run", "pg_backup.py"]
 
 ENV PATH="/app/.venv/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE="1" \
