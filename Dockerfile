@@ -3,7 +3,7 @@
 # update the client version in the apt-get command below
 FROM postgres:17
 
-FROM python:3.13-slim
+FROM ghcr.io/astral-sh/uv:0.8.3-bookworm-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN /usr/bin/apt-get update \
@@ -13,16 +13,18 @@ RUN /usr/bin/apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN /usr/sbin/useradd --create-home --shell /bin/bash --user-group python
-
 USER python
-RUN /usr/local/bin/python -m venv /home/python/venv
 
-COPY --chown=python:python pg_backup.py /home/python/pg-backup/pg_backup.py
+WORKDIR /app
+COPY --chown=python:python .python-version pyproject.toml uv.lock ./
+RUN /usr/local/bin/uv sync --frozen
 
-ENTRYPOINT ["/home/python/venv/bin/python"]
-CMD ["/home/python/pg-backup/pg_backup.py"]
+COPY --chown=python:python pg_backup.py ./
 
-ENV PATH="/home/python/venv/bin/python:${PATH}" \
+ENTRYPOINT ["/app/.venv/bin/python"]
+CMD ["/app/pg_backup.py"]
+
+ENV PATH="/app/.venv/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE="1" \
     PYTHONUNBUFFERED="1" \
     TZ="Etc/UTC"

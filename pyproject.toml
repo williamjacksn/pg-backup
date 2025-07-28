@@ -1,0 +1,7 @@
+[project]
+name = "pg-backup"
+version = "2024.3"
+description = "Wrapper for pg_dump"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
