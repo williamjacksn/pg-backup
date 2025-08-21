@@ -3,7 +3,7 @@
 # update the client version in the apt-get command below
 FROM postgres:17
 
-FROM ghcr.io/astral-sh/uv:0.8.11-bookworm-slim
+FROM ghcr.io/astral-sh/uv:0.8.13-bookworm-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN /usr/bin/apt-get update \
