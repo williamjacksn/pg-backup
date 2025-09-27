@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN /usr/bin/apt-get update \
  && /usr/bin/apt-get install --assume-yes postgresql-common \
  && /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y \
- && /usr/bin/apt-get install --assume-yes postgresql-client-17 \
+ && /usr/bin/apt-get install --assume-yes postgresql-client-18 \
  && rm -rf /var/lib/apt/lists/*
 
 RUN /usr/sbin/useradd --create-home --shell /bin/bash --user-group python
