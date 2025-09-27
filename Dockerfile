@@ -17,11 +17,11 @@ USER python
 
 WORKDIR /app
 COPY --chown=python:python .python-version pyproject.toml uv.lock ./
-RUN /usr/local/bin/uv sync --frozen
+RUN uv sync --frozen --no-dev
 
 COPY --chown=python:python pg_backup.py ./
 
-ENTRYPOINT ["uv", "run", "pg_backup.py"]
+ENTRYPOINT ["uv", "run", "--no-sync", "pg_backup.py"]
 
 ENV PATH="/app/.venv/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE="1" \
