@@ -1,7 +1,7 @@
 # The following line is for Dependabot.
 # When a new version of PostgreSQL is available,
 # update the client version in the apt-get command below
-FROM postgres:17
+FROM postgres:18
 
 FROM ghcr.io/astral-sh/uv:0.8.22-trixie-slim
 
