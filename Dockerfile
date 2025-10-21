@@ -3,7 +3,7 @@
 # update the client version in the apt-get command below
 FROM postgres:18
 
-FROM ghcr.io/astral-sh/uv:0.9.3-trixie-slim
+FROM ghcr.io/astral-sh/uv:0.9.5-trixie-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN /usr/bin/apt-get update \
